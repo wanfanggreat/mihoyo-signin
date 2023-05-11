@@ -37,6 +37,17 @@ class MihoYoApi {
             return resObj;
         });
     }
+
+    forumlunaSign(forumId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const url = "https://api-takumi.mihoyo.com/event/luna/sign";
+            const signPostData = { act_id: forumId };
+            let res = yield superagent_1.default
+                .post(url)
+                .set(this._getHeader("signIn", JSON.stringify(signPostData)))
+        });
+    }
+
     forumPostList(forumId) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=${forumId}&is_good=false&is_hot=false&page_size=20&sort_type=1`;
@@ -46,6 +57,17 @@ class MihoYoApi {
             return resObj;
         });
     }
+
+    newforumPostList(forumId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const url = `https://bbs-api.miyoushe.com/post/api/feeds/posts?gids=${forumId}&last_id=&fresh_action=1&is_first_initialize=true&filter=`;
+            let res = yield superagent_1.default.get(url).set(this._getHeader()).timeout(10000);
+            let resObj = JSON.parse(res.text);
+            logger_1.default.debug(`ForumList: ${res.text}`);
+            return resObj;
+        });
+    }
+
     forumPostDetail(postId) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `https://api-takumi.mihoyo.com/post/api/getPostFull?post_id=${postId}`;

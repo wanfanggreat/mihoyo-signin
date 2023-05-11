@@ -96,6 +96,7 @@ let resultMessage = `**Mihoyo 签到  ${TODAY_DATE}**\n\n`;
         }
         yield utils_1.default.randomSleepAsync();
     }
+
     // Execute task
     for (let forum of ForumData.default) {
         resultMessage += `\n**${forum.name}**\n`;
@@ -103,7 +104,7 @@ let resultMessage = `**Mihoyo 签到  ${TODAY_DATE}**\n\n`;
             // 2 BBS list post
             let resObj = yield (0, promise_retry_1.default)((retry, number) => {
                 logger_1.default.info(`读取帖子列表: [${forum.name}] 尝试次数: ${number}`);
-                return miHoYoApi.forumPostList(forum.forumId).catch((e) => {
+                return miHoYoApi.newforumPostList(forum.forumId).catch((e) => {
                     logger_1.default.error(`${forum.name} 读取帖子列表失败: [${e.message}] 尝试次数: ${number}`);
                     return retry(e);
                 });
